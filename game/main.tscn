@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://du2r8ucu1fxr1"]
+
+[ext_resource type="PackedScene" uid="uid://uamtmk655say" path="res://gameboard/gameboard.tscn" id="1_qi0uk"]
+[ext_resource type="PackedScene" uid="uid://7rebqg6eiivk" path="res://player/player.tscn" id="2_csej6"]
+[ext_resource type="Script" path="res://game/MainCamera.gd" id="3_8qsvt"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Gameboard" parent="." instance=ExtResource("1_qi0uk")]
+scale = Vector2(4, 4)
+
+[node name="Player" parent="." node_paths=PackedStringArray("gameboard") instance=ExtResource("2_csej6")]
+position = Vector2(64, 64)
+speed = 0.25
+gameboard = NodePath("../Gameboard")
+
+[node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+position_smoothing_enabled = true
+script = ExtResource("3_8qsvt")
+target = NodePath("../Player")
