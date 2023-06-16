@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://du2r8ucu1fxr1"]
+[gd_scene load_steps=5 format=3 uid="uid://du2r8ucu1fxr1"]
 
 [ext_resource type="PackedScene" uid="uid://uamtmk655say" path="res://gameboard/gameboard.tscn" id="1_qi0uk"]
 [ext_resource type="PackedScene" uid="uid://7rebqg6eiivk" path="res://player/player.tscn" id="2_csej6"]
-[ext_resource type="Script" path="res://game/MainCamera.gd" id="3_8qsvt"]
+[ext_resource type="Script" path="res://game/main_camera.gd" id="3_kp7wg"]
+[ext_resource type="PackedScene" uid="uid://heyv2ki5rbkx" path="res://game/pause.tscn" id="4_me8vr"]
 
 [node name="Main" type="Node2D"]
+metadata/_edit_lock_ = true
 
 [node name="Gameboard" parent="." instance=ExtResource("1_qi0uk")]
 scale = Vector2(4, 4)
+layer_0/tile_data = PackedInt32Array()
 
 [node name="Player" parent="." node_paths=PackedStringArray("gameboard") instance=ExtResource("2_csej6")]
 position = Vector2(64, 64)
@@ -16,5 +19,13 @@ gameboard = NodePath("../Gameboard")
 
 [node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position_smoothing_enabled = true
-script = ExtResource("3_8qsvt")
+script = ExtResource("3_kp7wg")
 target = NodePath("../Player")
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="UICanvas" instance=ExtResource("4_me8vr")]
+visible = false
+
+[connection signal="pause_changed" from="UICanvas/Pause" to="MainCamera" method="_on_pause_pause_changed"]
+[connection signal="reset" from="UICanvas/Pause" to="Player" method="_on_pause_reset"]

@@ -1,44 +1,87 @@
-extends Sprite2D
+extends Node2D
 
 @export var speed: float = 3
 @export var gameboard: TileMap
 
-const TILE_TYPE = preload("res://types/TILE_TYPE.gd").TILE_TYPE
+const TILE_TYPE = preload("res://types/tile_type.gd").TILE_TYPE
 enum FLAVOURS { ORANGE, LEMON }
 
 var next_move: Vector2i
 var move_tween: Tween
 var grid_position: Vector2i
-var flavour: FLAVOURS = FLAVOURS.LEMON
+var current_tile_type: TILE_TYPE
+var flavour: FLAVOURS
+var start_position: Vector2i
 
 var inputs = {"ui_right": Vector2i.RIGHT,
 			  "ui_left": Vector2i.LEFT,
 			  "ui_up": Vector2i.UP,
 			  "ui_down": Vector2i.DOWN}
 
+var directions = {"ui_right": 0,
+			  "ui_left": 180,
+			  "ui_up": -90,
+			  "ui_down": 90}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	_reset()
+
+
+func _win() -> void:
+	$"/root/GameManager".player_win()
 	return
+
+
+func _reset() -> void:
+	next_move = Vector2i.ZERO
+	move_tween = null
+	grid_position = Vector2i.ZERO
+	position = Vector2(64, 64)
+	current_tile_type = TILE_TYPE.PINK
+	flavour = FLAVOURS.LEMON
+	start_position = Vector2i(-1, -1)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if move_tween != null and move_tween.is_running():
 		return
 	
-	if next_move != Vector2i.ZERO:
-		move(next_move)
-		return
+	if current_tile_type == TILE_TYPE.GREEN:
+		_win()
+	
+	if grid_position == start_position:
+		next_move = Vector2i.ZERO
 		
+	if next_move != Vector2i.ZERO:
+		print()
+		print(start_position)	
+		print(grid_position)
+		var temp_move: Vector2i = next_move
+		next_move = Vector2i.ZERO
+		automove(temp_move)
+		return
+	
+	start_position = Vector2i(-1, -1)
+	
+	if Input.is_action_just_pressed("reset"):
+		_reset()
+	
 	for dir in inputs.keys():
 		if Input.is_action_pressed(dir):
+			$Sprite2D.rotation_degrees = directions[dir]
 			move(inputs[dir])
+			break
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	pass
-			
-func move(dir: Vector2i) -> void:
-	next_move = Vector2i.ZERO	
+
+
+func automove(dir: Vector2i) -> void:
 	var type: TILE_TYPE = gameboard.get_tile_type(grid_position + dir)
 	if type == TILE_TYPE.RED:
 		return
@@ -58,4 +101,14 @@ func move(dir: Vector2i) -> void:
 		flavour = FLAVOURS.LEMON
 		next_move = dir
 	
-	print(TILE_TYPE.keys()[type], grid_position)	
+	current_tile_type = type
+
+
+func move(dir: Vector2i) -> void:
+	start_position = grid_position
+		
+	automove(dir)
+
+
+func _on_pause_reset() -> void:
+	_reset()

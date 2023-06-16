@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://sogomrhtwasj"]
+
+[ext_resource type="Theme" uid="uid://chbejigs80llc" path="res://default_theme.tres" id="1_ci6qq"]
+[ext_resource type="Script" path="res://game/BackButton.gd" id="2_3qdbu"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_krx4b"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_jqo2q"]
+events = [SubResource("InputEventAction_krx4b")]
+
+[node name="Help" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -547.5
+offset_right = 547.5
+offset_bottom = 248.0
+grow_horizontal = 2
+theme = ExtResource("1_ci6qq")
+theme_override_font_sizes/font_size = 240
+text = "The Rules"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -148.0
+offset_top = -180.0
+offset_right = 148.0
+offset_bottom = -24.9973
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_ci6qq")
+shortcut = SubResource("Shortcut_jqo2q")
+text = " Back "
+script = ExtResource("2_3qdbu")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -724.5
+offset_top = 285.0
+offset_right = 724.5
+offset_bottom = 875.0
+grow_horizontal = 2
+theme = ExtResource("1_ci6qq")
+theme_override_font_sizes/font_size = 45
+text = "Get to the green tile
+Pink tiles are fine to walk on
+Red tiles are barriers
+Yellow tiles are electric
+Orange tiles make you orange flavoured
+Purple tiles make you lemon flavoured. You also slide over them
+Blue tiles are water filled with piranhas
+    You can't walk onto them if they're next to a yellow tile
+    You also can't walk onto them if you're orange flavoured
+    (Piranhas like oranges)"
+
+[connection signal="pressed" from="BackButton" to="BackButton" method="_on_pressed"]
