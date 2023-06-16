@@ -11,6 +11,8 @@ metadata/_edit_lock_ = true
 [node name="Gameboard" parent="." instance=ExtResource("1_qi0uk")]
 scale = Vector2(4, 4)
 layer_0/tile_data = PackedInt32Array()
+width = 10
+height = 10
 
 [node name="Player" parent="." node_paths=PackedStringArray("gameboard") instance=ExtResource("2_csej6")]
 position = Vector2(64, 64)

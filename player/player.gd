@@ -11,12 +11,18 @@ var move_tween: Tween
 var grid_position: Vector2i
 var current_tile_type: TILE_TYPE
 var flavour: FLAVOURS
-var start_position: Vector2i
+var move_start: Vector2i
+var start_pos: Vector2i
+
+var TILE_WIDTH: float
+var POS_OFFSET: Vector2
+
 
 var inputs = {"ui_right": Vector2i.RIGHT,
 			  "ui_left": Vector2i.LEFT,
 			  "ui_up": Vector2i.UP,
 			  "ui_down": Vector2i.DOWN}
+
 
 var directions = {"ui_right": 0,
 			  "ui_left": 180,
@@ -24,8 +30,13 @@ var directions = {"ui_right": 0,
 			  "ui_down": 90}
 
 
-# Called when the node enters the scene tree for the first time.
+func grid_to_position(grid: Vector2i) -> Vector2:
+	return Vector2(grid * TILE_WIDTH) + POS_OFFSET
+
+
 func _ready() -> void:
+	TILE_WIDTH = gameboard.tile_set.tile_size.x * gameboard.transform.get_scale().x
+	POS_OFFSET = Vector2(TILE_WIDTH / 2.0, TILE_WIDTH / 2.0)
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_reset()
 
@@ -38,34 +49,30 @@ func _win() -> void:
 func _reset() -> void:
 	next_move = Vector2i.ZERO
 	move_tween = null
-	grid_position = Vector2i.ZERO
-	position = Vector2(64, 64)
+	grid_position = start_pos
+	position = grid_to_position(grid_position)
 	current_tile_type = TILE_TYPE.PINK
 	flavour = FLAVOURS.LEMON
-	start_position = Vector2i(-1, -1)
+	move_start = Vector2i(-1, -1)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if move_tween != null and move_tween.is_running():
 		return
 	
 	if current_tile_type == TILE_TYPE.GREEN:
 		_win()
 	
-	if grid_position == start_position:
+	if grid_position == move_start:
 		next_move = Vector2i.ZERO
 		
 	if next_move != Vector2i.ZERO:
-		print()
-		print(start_position)	
-		print(grid_position)
 		var temp_move: Vector2i = next_move
 		next_move = Vector2i.ZERO
 		automove(temp_move)
 		return
 	
-	start_position = Vector2i(-1, -1)
+	move_start = Vector2i(-1, -1)
 	
 	if Input.is_action_just_pressed("reset"):
 		_reset()
@@ -77,17 +84,13 @@ func _process(delta: float) -> void:
 			break
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	pass
-
-
 func automove(dir: Vector2i) -> void:
 	var type: TILE_TYPE = gameboard.get_tile_type(grid_position + dir)
 	if type == TILE_TYPE.RED:
 		return
 		
-	var new_pos: Vector2 = position + Vector2(dir * gameboard.tile_set.tile_size.x * gameboard.transform.get_scale().x)
-	grid_position += dir
+	grid_position += dir	
+	var new_pos: Vector2 = grid_to_position(grid_position)
 	
 	move_tween = create_tween()
 	move_tween.tween_property(self, "position", new_pos, speed).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -105,10 +108,16 @@ func automove(dir: Vector2i) -> void:
 
 
 func move(dir: Vector2i) -> void:
-	start_position = grid_position
+	move_start = grid_position
 		
 	automove(dir)
 
 
 func _on_pause_reset() -> void:
 	_reset()
+
+
+func set_start(pos: Vector2i) -> void:
+	position = grid_to_position(pos)
+	grid_position = pos
+	start_pos = pos
