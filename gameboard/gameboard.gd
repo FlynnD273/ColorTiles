@@ -13,15 +13,6 @@ func set_tile(pos: Vector2i, type: TILE_TYPE) -> void:
 	set_cell(0, pos, 0, Vector2i(type, 0))
 
 
-#func rand_range(minimum: int, maximum: int = -1) -> int:
-#	if maximum == -1:
-#		maximum = minimum
-#		minimum = 0
-#	var rand: int = rand_from_seed(tile_seed)[0]
-#	tile_seed = rand
-#	return (rand % (maximum - minimum)) + minimum
-
-
 func generate_tiles() -> void:
 	const dirs: Array[Vector2i] = [ Vector2i.RIGHT, Vector2i.UP, Vector2i.LEFT, Vector2i.DOWN ]
 	var path: Array[Vector2i] = []
@@ -30,7 +21,7 @@ func generate_tiles() -> void:
 	
 	path.append(Vector2i(0, randi_range(0, height - 1)))
 	taken_dirs.append(0)
-	
+
 	while path[-1].x != width - 1:
 		count += 1
 		if len(path) == 0 or count > max_complexity * (width + height):
@@ -77,7 +68,7 @@ func generate_tiles() -> void:
 	
 	for y in range(height):
 		for x in range(width):
-#			set_tile(Vector2i(x, y), randi_range(0, len(TILE_TYPE) - 2))
+			# set_tile(Vector2i(x, y), randi_range(0, len(TILE_TYPE) - 2))
 			set_tile(Vector2i(x, y), TILE_TYPE.RED)
 
 
