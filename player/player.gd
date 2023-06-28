@@ -4,7 +4,7 @@ extends Node2D
 @export var gameboard: TileMap
 
 const TILE_TYPE = preload("res://types/tile_type.gd").TILE_TYPE
-enum FLAVOURS { ORANGE, LEMON }
+const FLAVOURS = preload("res://types/flavours.gd").FLAVOURS
 
 var next_move: Vector2i
 var move_tween: Tween

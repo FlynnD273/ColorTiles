@@ -64,13 +64,14 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -724.5
-offset_top = 285.0
+offset_top = 267.0
 offset_right = 724.5
-offset_bottom = 875.0
+offset_bottom = 916.0
 grow_horizontal = 2
 theme = ExtResource("1_ci6qq")
 theme_override_font_sizes/font_size = 45
-text = "Get to the green tile
+text = "Use the arrow keys to move, R to reset
+Get to the green tile (on the far right)
 Pink tiles are fine to walk on
 Red tiles are barriers
 Yellow tiles are electric

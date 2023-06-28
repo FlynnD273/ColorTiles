@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm8qc6nnff4ub"]
+[gd_scene load_steps=8 format=3 uid="uid://cm8qc6nnff4ub"]
 
 [ext_resource type="Theme" uid="uid://chbejigs80llc" path="res://default_theme.tres" id="1_ci6qq"]
 [ext_resource type="Script" path="res://game/HelpButton.gd" id="2_fm7il"]
 [ext_resource type="Script" path="res://game/StartButton.gd" id="2_oveof"]
 [ext_resource type="PackedScene" uid="uid://sogomrhtwasj" path="res://game/help.tscn" id="4_8yv4r"]
 [ext_resource type="Script" path="res://game/QuitButton.gd" id="5_14ksr"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_xvms8"]
+action = &"ui_select"
+
+[sub_resource type="Shortcut" id="Shortcut_7t7he"]
+events = [SubResource("InputEventAction_xvms8")]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -57,6 +63,8 @@ offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ci6qq")
+shortcut = SubResource("Shortcut_7t7he")
+shortcut_in_tooltip = false
 text = " Start  "
 script = ExtResource("2_oveof")
 

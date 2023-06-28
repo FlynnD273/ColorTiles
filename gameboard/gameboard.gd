@@ -6,6 +6,7 @@ extends TileMap
 @export var max_complexity: float = 3
 
 const TILE_TYPE = preload("res://types/tile_type.gd").TILE_TYPE
+const FLAVOURS = preload("res://types/flavours.gd").FLAVOURS
 var tile_seed: int
 
 
@@ -14,7 +15,7 @@ func set_tile(pos: Vector2i, type: TILE_TYPE) -> void:
 
 
 func generate_tiles() -> void:
-	const dirs: Array[Vector2i] = [ Vector2i.RIGHT, Vector2i.UP, Vector2i.LEFT, Vector2i.DOWN ]
+	var dirs: Array[Vector2i] = [ Vector2i.RIGHT, Vector2i.UP, Vector2i.LEFT, Vector2i.DOWN ]
 	var path: Array[Vector2i] = []
 	var taken_dirs: Array[int] = []
 	var count: int = 0
@@ -66,14 +67,42 @@ func generate_tiles() -> void:
 		generate_tiles()
 		return
 	
+	const rand_tiles: Array[TILE_TYPE] = [ TILE_TYPE.YELLOW, TILE_TYPE.ORANGE, TILE_TYPE.BLUE, TILE_TYPE.RED, TILE_TYPE.PURPLE ]
 	for y in range(height):
 		for x in range(width):
-			# set_tile(Vector2i(x, y), randi_range(0, len(TILE_TYPE) - 2))
-			set_tile(Vector2i(x, y), TILE_TYPE.RED)
+			set_tile(Vector2i(x, y), rand_tiles[randi_range(0, len(rand_tiles) - 2)])
+			# set_tile(Vector2i(x, y), TILE_TYPE.RED)
 
 
-	for tile in path:
-		set_tile(tile, TILE_TYPE.PINK)
+	var curr_flavour = FLAVOURS.LEMON
+	const always_valid: Array[TILE_TYPE] = [ TILE_TYPE.PINK, TILE_TYPE.ORANGE ]
+	const yellow_replace: Array[TILE_TYPE] = [ TILE_TYPE.PINK, TILE_TYPE.ORANGE, TILE_TYPE.BLUE, TILE_TYPE.RED, TILE_TYPE.PURPLE ]
+
+	for i in range(len(path)):
+		var tile: Vector2i = path[i]
+		var valid_tiles = always_valid.duplicate()
+		var tile_type: TILE_TYPE
+		if curr_flavour == FLAVOURS.LEMON:
+			valid_tiles.append(TILE_TYPE.BLUE)
+
+		if i > 0 and i < len(path) - 1:
+			var all_vert = path[i - 1].x == tile.x and path[i + 1].x == tile.x
+			var all_hor = path[i - 1].y == tile.y and path[i + 1].y == tile.y
+			if all_vert or all_hor:
+				valid_tiles.append(TILE_TYPE.PURPLE)
+
+		tile_type = valid_tiles[randi_range(0, len(valid_tiles) - 1)]
+		if tile_type == TILE_TYPE.ORANGE:
+			curr_flavour = FLAVOURS.ORANGE
+		elif tile_type == TILE_TYPE.PURPLE:
+			curr_flavour = FLAVOURS.LEMON
+
+		if tile_type == TILE_TYPE.BLUE:
+			for neighbour in get_surrounding_cells(tile):
+				if get_tile_type(neighbour) == TILE_TYPE.YELLOW:
+					set_tile(neighbour, yellow_replace[randi_range(0, len(yellow_replace) - 1)])
+
+		set_tile(tile, tile_type)
 	
 	set_tile(path[-1], TILE_TYPE.GREEN)
 	$"../Player".call_deferred("set_start", path[0])	
