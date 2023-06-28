@@ -1,13 +1,8 @@
 #!/bin/bash
 
-cd build/windows
-7z a -mx=9 colortiles-windows.zip colortiles.exe
+rm -rf ./build/gitrelease
+mkdir ./build/gitrelease
 
-cd ../linux
-7z a -mx=9 colortiles-linux.zip colortiles.x86_64
+7z a -mx=9 ./build/gitrelease/colortiles-windows.zip ./build/windows/colortiles.exe
 
-cd ../
-
-mkdir gitrelease
-mv windows/colortiles-windows.zip gitrelease/
-mv linux/colortiles-linux.zip gitrelease/
+7z a -mx=9 ./build/gitrelease/colortiles-linux.zip ./build/linux/colortiles.x86_64
