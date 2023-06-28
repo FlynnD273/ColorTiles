@@ -21,14 +21,15 @@ speed = 0.25
 gameboard = NodePath("../Gameboard")
 
 [node name="MainCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position_smoothing_enabled = true
+process_mode = 3
 script = ExtResource("3_kp7wg")
 target = NodePath("../Player")
+smoothing = 5.0
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 
 [node name="Pause" parent="UICanvas" instance=ExtResource("4_me8vr")]
 visible = false
 
-[connection signal="pause_changed" from="UICanvas/Pause" to="MainCamera" method="_on_pause_pause_changed"]
 [connection signal="reset" from="UICanvas/Pause" to="Player" method="_on_pause_reset"]
+[connection signal="zoom_changed" from="UICanvas/Pause" to="MainCamera" method="_on_pause_zoom_changed"]

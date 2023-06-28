@@ -145,3 +145,6 @@ func _get_raw_tile_type(pos: Vector2i) -> TILE_TYPE:
 		return TILE_TYPE.RED
 		
 	return TILE_TYPE[TILE_TYPE.keys()[tile]]
+
+func get_tile_size() -> float:
+	return tile_set.tile_size.x * transform.get_scale().x

@@ -35,7 +35,7 @@ func grid_to_position(grid: Vector2i) -> Vector2:
 
 
 func _ready() -> void:
-	TILE_WIDTH = gameboard.tile_set.tile_size.x * gameboard.transform.get_scale().x
+	TILE_WIDTH = gameboard.get_tile_size()
 	POS_OFFSET = Vector2(TILE_WIDTH / 2.0, TILE_WIDTH / 2.0)
 	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_reset()

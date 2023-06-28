@@ -124,6 +124,39 @@ autowrap_mode = 0
 context_menu_enabled = true
 selection_enabled = true
 
+[node name="CameraZoomSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -530.0
+offset_top = -46.0
+offset_right = -30.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_mqyr6")
+min_value = 0.2
+max_value = 1.0
+step = 0.0
+value = 1.0
+
+[node name="CameraZoomLabel" type="Label" parent="CameraZoomSlider"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -189.5
+offset_top = -76.0
+offset_right = 189.5
+offset_bottom = -11.0
+grow_horizontal = 2
+theme = ExtResource("1_mqyr6")
+theme_override_font_sizes/font_size = 50
+text = "Camera Zoom:"
+
 [node name="Help" parent="." instance=ExtResource("4_blwey")]
 visible = false
 layout_mode = 1
@@ -132,3 +165,4 @@ layout_mode = 1
 [connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="HelpButton" to="HelpButton" method="_on_pressed"]
 [connection signal="pressed" from="QuitButton" to="QuitButton" method="_on_pressed"]
+[connection signal="value_changed" from="CameraZoomSlider" to="." method="_on_camera_zoom_slider_value_changed"]
