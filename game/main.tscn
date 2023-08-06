@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://du2r8ucu1fxr1"]
+[gd_scene load_steps=9 format=3 uid="uid://du2r8ucu1fxr1"]
 
 [ext_resource type="PackedScene" uid="uid://uamtmk655say" path="res://gameboard/gameboard.tscn" id="1_qi0uk"]
 [ext_resource type="PackedScene" uid="uid://7rebqg6eiivk" path="res://player/player.tscn" id="2_csej6"]
 [ext_resource type="Script" path="res://game/main_camera.gd" id="3_kp7wg"]
 [ext_resource type="PackedScene" uid="uid://heyv2ki5rbkx" path="res://game/pause.tscn" id="4_me8vr"]
+[ext_resource type="Texture2D" uid="uid://ckne6a4lff64a" path="res://images/PauseIcon.svg" id="5_eejfh"]
+[ext_resource type="Script" path="res://game/PauseButton.gd" id="5_q2ynm"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_engmd"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_fr1e4"]
+events = [SubResource("InputEventAction_engmd")]
 
 [node name="Main" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -28,8 +36,18 @@ smoothing = 5.0
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 
+[node name="PauseButton" type="TextureButton" parent="UICanvas"]
+process_mode = 3
+offset_right = 64.0
+offset_bottom = 64.0
+shortcut = SubResource("Shortcut_fr1e4")
+shortcut_in_tooltip = false
+texture_normal = ExtResource("5_eejfh")
+script = ExtResource("5_q2ynm")
+
 [node name="Pause" parent="UICanvas" instance=ExtResource("4_me8vr")]
 visible = false
 
+[connection signal="pressed" from="UICanvas/PauseButton" to="UICanvas/PauseButton" method="_on_pressed"]
 [connection signal="reset" from="UICanvas/Pause" to="Player" method="_on_pause_reset"]
 [connection signal="zoom_changed" from="UICanvas/Pause" to="MainCamera" method="_on_pause_zoom_changed"]
