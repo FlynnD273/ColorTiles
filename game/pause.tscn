@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://heyv2ki5rbkx"]
 
 [ext_resource type="Theme" uid="uid://chbejigs80llc" path="res://default_theme.tres" id="1_mqyr6"]
-[ext_resource type="Script" path="res://game/pause.gd" id="1_w1s1q"]
-[ext_resource type="Script" path="res://game/HelpButton.gd" id="3_c1y87"]
+[ext_resource type="Script" uid="uid://c8mxt5ro7e4fu" path="res://game/pause.gd" id="1_w1s1q"]
+[ext_resource type="Script" uid="uid://b1q6wgm6hu68l" path="res://game/HelpButton.gd" id="3_c1y87"]
 [ext_resource type="PackedScene" uid="uid://sogomrhtwasj" path="res://game/help.tscn" id="4_blwey"]
-[ext_resource type="Script" path="res://game/QuitButton.gd" id="5_7nsje"]
+[ext_resource type="Script" uid="uid://bnth0xau1u3jy" path="res://game/QuitButton.gd" id="5_7nsje"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s1nk"]
 

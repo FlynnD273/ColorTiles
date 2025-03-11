@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://uamtmk655say"]
 
 [ext_resource type="TileSet" uid="uid://1xj57kcos6f2" path="res://gameboard/gameboard.tres" id="1_4g2t2"]
-[ext_resource type="Script" path="res://gameboard/gameboard.gd" id="2_l0pd4"]
+[ext_resource type="Script" uid="uid://boho8awom4fre" path="res://gameboard/gameboard.gd" id="2_l0pd4"]
 
 [node name="Gameboard" type="TileMap"]
 tile_set = ExtResource("1_4g2t2")

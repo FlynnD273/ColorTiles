@@ -8,18 +8,19 @@ var tile_seed: int = 0
 
 
 func _set_win_text() -> void:
-	$"../Title/TitleLabel".text = "You win!"
-	$"../Title/StartButton".text = " Restart  "
+  $"../Title/TitleLabel".text = "You win!"
+  $"../Title/StartButton".text = " Restart  "
 
 
 func player_win() -> void:
-	get_tree().change_scene_to_packed(title_scene)
-	call_deferred("_set_win_text")
+  load_title()
+  await get_tree().process_frame
+  _set_win_text.call_deferred()
 
 
 func load_title() -> void:
-	get_tree().change_scene_to_packed(title_scene)
+  get_tree().change_scene_to_packed(title_scene)
 
 
 func start_game() -> void:
-	get_tree().change_scene_to_packed(game_scene)
+  get_tree().change_scene_to_packed(game_scene)

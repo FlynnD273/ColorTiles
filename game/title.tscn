@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm8qc6nnff4ub"]
 
 [ext_resource type="Theme" uid="uid://chbejigs80llc" path="res://default_theme.tres" id="1_ci6qq"]
-[ext_resource type="Script" path="res://game/HelpButton.gd" id="2_fm7il"]
-[ext_resource type="Script" path="res://game/StartButton.gd" id="2_oveof"]
+[ext_resource type="Script" uid="uid://b1q6wgm6hu68l" path="res://game/HelpButton.gd" id="2_fm7il"]
+[ext_resource type="Script" uid="uid://cu4ii7o0upix" path="res://game/StartButton.gd" id="2_oveof"]
 [ext_resource type="PackedScene" uid="uid://sogomrhtwasj" path="res://game/help.tscn" id="4_8yv4r"]
-[ext_resource type="Script" path="res://game/QuitButton.gd" id="5_14ksr"]
+[ext_resource type="Script" uid="uid://bnth0xau1u3jy" path="res://game/QuitButton.gd" id="5_14ksr"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_xvms8"]
 action = &"ui_select"

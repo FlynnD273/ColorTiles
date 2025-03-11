@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://7rebqg6eiivk"]
 
 [ext_resource type="Texture2D" uid="uid://5xf5qv5vnr8o" path="res://player/player.png" id="2_81gx7"]
-[ext_resource type="Script" path="res://player/player.gd" id="2_ljyyf"]
+[ext_resource type="Script" uid="uid://g4h26upedgmk" path="res://player/player.gd" id="2_ljyyf"]
 
 [node name="Player" type="Node2D"]
 position = Vector2(576, 468)
